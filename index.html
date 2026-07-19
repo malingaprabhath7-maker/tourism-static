@@ -27,12 +27,82 @@
         </div>
     </section>
 
-    <div class="container">
-        <h3 class="mb-4" id="packages">Our Tour Packages</h3>
+    <!-- ==================== 1. අලුත් දෙය: SEARCH & FILTER SECTION ==================== -->
+    <section class="search-filter-section mb-5">
+        <div class="container">
+            <div class="card p-4 shadow-sm border-0 bg-light">
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+                            <input type="text" id="package-search" class="form-control border-start-0 ps-0" placeholder="Search destinations or packages...">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <select id="package-category" class="form-select">
+                            <option value="">All Categories</option>
+                            <option value="beach">Beach Tours</option>
+                            <option value="cultural">Cultural & Heritage</option>
+                            <option value="adventure">Adventure & Wildlife</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-primary w-100 fw-bold">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TOUR PACKAGES GRID ==================== -->
+    <div class="container mb-5">
+        <h3 class="mb-4 fw-bold" id="packages">Our Tour Packages</h3>
         <div class="row g-4" id="package-grid">
             <!-- Cards are inserted here by home.js -->
         </div>
     </div>
+
+    <!-- ==================== 2. අලුත් දෙය: TESTIMONIALS SECTION ==================== -->
+    <section class="testimonials py-5 bg-light border-top border-bottom">
+        <div class="container">
+            <h3 class="text-center mb-5 fw-bold">What Our Travelers Say</h3>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm p-3">
+                        <div class="card-body">
+                            <div class="text-warning mb-2">
+                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                            </div>
+                            <p class="card-text text-muted italic">"Amazing experience! The Sigiriya tour was perfectly organized. Highly recommend Travel Lanka."</p>
+                            <h6 class="card-title fw-bold mb-0 mt-3">- John Doe</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm p-3">
+                        <div class="card-body">
+                            <div class="text-warning mb-2">
+                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                            </div>
+                            <p class="card-text text-muted italic">"Ella train ride package was breathtaking. Everything from hotels to transport was top notch."</p>
+                            <h6 class="card-title fw-bold mb-0 mt-3">- Sarah Smith</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm p-3">
+                        <div class="card-body">
+                            <div class="text-warning mb-2">
+                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+                            </div>
+                            <p class="card-text text-muted italic">"Great service and friendly guides. Safe and comfortable traveling throughout the country."</p>
+                            <h6 class="card-title fw-bold mb-0 mt-3">- Amila Perera</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 </main>
 
