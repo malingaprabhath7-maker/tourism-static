@@ -1,0 +1,73 @@
+---
+import type { Lang } from '../data/packages';
+import { tours } from '../data/packages';
+import { t, page, url } from '../data/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const u = t(lang);
+const data = tours.map((x) => ({ slug: x.slug, title: x[lang].title, place: x[lang].place, days: x.days, price: x.priceUsd, image: x.image ? url(x.image) : null, href: page(lang, `packages/${x.slug}`) }));
+---
+<section class="mx-auto max-w-4xl px-5 pt-12">
+  <h1 class="font-display text-4xl font-extrabold tracking-tight sm:text-5xl">{u.planTitle}</h1>
+  <p class="mt-3 text-lg text-muted">{u.planIntro}</p>
+  <div id="plan" class="mt-10" data-day={u.day(1)} data-days={u.day(2)} data-remove={u.remove} data-lang={lang}>
+    <div id="empty" class="rounded-3xl bg-soft p-10 text-center">
+      <p class="text-lg">{u.planEmpty}</p>
+      <a href={page(lang, 'packages')} class="btn btn-main mt-5">{u.browse}</a>
+    </div>
+    <div id="filled" hidden>
+      <ul id="items" class="divide-y divide-line rounded-3xl border border-line"></ul>
+      <div class="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-3xl bg-soft p-6">
+        <label class="flex items-center gap-3 font-semibold">{u.people} <input id="people" type="number" min="1" max="30" value="2" class="field w-24" /></label>
+        <p class="text-right"><span class="text-muted">{u.total}</span><br /><span id="total" class="font-display text-3xl font-extrabold text-lagoon" data-usd="0"></span><br /><span id="totaldays" class="text-sm text-muted"></span></p>
+      </div>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <button id="share" type="button" class="btn btn-main">{u.share}</button>
+        <button id="clear" type="button" class="btn btn-line">{u.clear}</button>
+      </div>
+      <p class="mt-4 text-xs text-muted">{u.demo} {u.rateNote}</p>
+    </div>
+  </div>
+</section>
+<script type="application/json" id="tour-data" set:html={JSON.stringify(data)} />
+<script>
+  import { saved, setSaved, renderPrices, money } from '../scripts/site';
+  type T = { slug: string; title: string; place: string; days: number; price: number; image: string | null; href: string };
+  const all: T[] = JSON.parse(document.getElementById('tour-data')!.textContent!);
+  const root = document.getElementById('plan')!;
+  const people = document.getElementById('people') as HTMLInputElement;
+  const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
+  const dayLabel = (n: number) => (n === 1 ? root.dataset.day! : root.dataset.days!).replace(/\d+/, String(n));
+
+  function render() {
+    const list = saved().map((s) => all.find((x) => x.slug === s)).filter(Boolean) as T[];
+    document.getElementById('empty')!.hidden = list.length > 0;
+    document.getElementById('filled')!.hidden = list.length === 0;
+    document.getElementById('items')!.innerHTML = list.map((x) => `
+      <li class="flex items-center gap-4 p-4">
+        ${x.image ? `<img src="${x.image}" alt="" class="size-16 shrink-0 rounded-2xl object-cover">` : '<span class="size-16 shrink-0 rounded-2xl bg-soft"></span>'}
+        <div class="min-w-0 flex-1"><a href="${x.href}" class="font-display font-bold hover:text-lagoon">${esc(x.title)}</a><p class="text-sm text-muted">${esc(x.place)} · ${dayLabel(x.days)}</p></div>
+        <span class="font-semibold" data-usd="${x.price}"></span>
+        <button type="button" data-remove="${x.slug}" class="text-sm font-semibold text-muted hover:text-ink">${esc(root.dataset.remove!)}</button>
+      </li>`).join('');
+    const n = Math.max(1, Number(people.value) || 1);
+    const sum = list.reduce((a, x) => a + x.price, 0) * n;
+    document.getElementById('total')!.dataset.usd = String(sum);
+    document.getElementById('totaldays')!.textContent = dayLabel(list.reduce((a, x) => a + x.days, 0));
+    renderPrices();
+  }
+  root.addEventListener('click', (e) => {
+    const b = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-remove]');
+    if (b) { setSaved(saved().filter((s) => s !== b.dataset.remove)); render(); }
+  });
+  people.addEventListener('input', render);
+  document.getElementById('clear')!.addEventListener('click', () => { setSaved([]); render(); });
+  document.getElementById('share')!.addEventListener('click', () => {
+    const list = saved().map((s) => all.find((x) => x.slug === s)).filter(Boolean) as T[];
+    const n = Math.max(1, Number(people.value) || 1);
+    const text = ['Travel Lanka – my trip', ...list.map((x, i) => `${i + 1}. ${x.title} (${dayLabel(x.days)}) – ${money(x.price)}`), `× ${n} = ${money(list.reduce((a, x) => a + x.price, 0) * n)}`].join('\n');
+    location.href = `https://wa.me/?text=${encodeURIComponent(text)}`;
+  });
+  document.addEventListener('tl:currency', () => {});
+  render();
+</script>

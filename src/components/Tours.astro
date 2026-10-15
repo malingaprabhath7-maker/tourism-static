@@ -1,0 +1,82 @@
+---
+import type { Lang } from '../data/packages';
+import { tours, kinds, regions } from '../data/packages';
+import { t } from '../data/ui';
+import TourCard from './TourCard.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const u = t(lang);
+const max = Math.max(...tours.map((x) => x.priceUsd));
+---
+<section class="mx-auto max-w-6xl px-5 pt-12">
+  <h1 class="font-display text-4xl font-extrabold tracking-tight sm:text-5xl">{u.toursTitle}</h1>
+  <p class="mt-3 text-lg text-muted">{u.toursIntro}</p>
+  <div class="mt-10 grid gap-10 lg:grid-cols-[16rem_1fr]">
+    <form id="filters" class="space-y-6 lg:sticky lg:top-24 lg:self-start">
+      <div><label class="label" for="f-region">{u.region}</label>
+        <select id="f-region" name="region" class="field"><option value="">{u.whereAll}</option>{Object.entries(regions).map(([en, si]) => <option value={en}>{lang === 'si' ? si : en}</option>)}</select></div>
+      <fieldset><legend class="label">{u.interest}</legend>
+        <div class="flex flex-wrap gap-1.5">{Object.entries(kinds).map(([k, v]) => (
+          <label class="cursor-pointer"><input type="checkbox" name="kind" value={k} class="peer sr-only" /><span class="inline-block rounded-full border border-line px-3 py-1.5 text-sm font-medium peer-checked:border-lagoon peer-checked:bg-lagoon peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-coconut">{v[lang]}</span></label>
+        ))}</div>
+      </fieldset>
+      <div><label class="label" for="f-days">{u.days}</label>
+        <select id="f-days" name="days" class="field"><option value="">{u.daysAny}</option>{[1, 2, 3].map((d) => <option value={d}>{u.day(d)}</option>)}</select></div>
+      <div><label class="label" for="f-price">{u.maxPrice}: <span id="price-out" data-usd={max} class="text-ink"></span></label>
+        <input id="f-price" name="price" type="range" min="50" max={max} step="10" value={max} class="w-full accent-lagoon" /></div>
+      <div><label class="label" for="f-sort">{u.sort}</label>
+        <select id="f-sort" name="sort" class="field"><option value="">{u.sortPop}</option><option value="low">{u.sortLow}</option><option value="high">{u.sortHigh}</option><option value="short">{u.sortShort}</option></select></div>
+      <button type="reset" class="text-sm font-semibold text-lagoon hover:underline">{u.reset}</button>
+    </form>
+    <div>
+      <p id="count" class="mb-4 text-sm font-semibold text-muted" aria-live="polite" data-one={u.results(1)} data-many={u.results(2)}></p>
+      <div id="grid" class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">{tours.map((tour) => <TourCard tour={tour} lang={lang} />)}</div>
+      <p id="none" hidden class="rounded-2xl bg-soft p-8 text-center text-muted">{u.none}</p>
+    </div>
+  </div>
+</section>
+<script>
+  import { renderPrices } from '../scripts/site';
+  const form = document.getElementById('filters') as HTMLFormElement;
+  const grid = document.getElementById('grid')!;
+  const cards = [...grid.querySelectorAll<HTMLElement>('[data-tour]')];
+  const original = [...cards];
+  const priceOut = document.getElementById('price-out')!;
+  const count = document.getElementById('count')!;
+
+  // pre-fill from the home-page search (?region=&kind=&days=)
+  const q = new URLSearchParams(location.search);
+  if (q.get('region')) (form.elements.namedItem('region') as HTMLSelectElement).value = q.get('region')!;
+  if (q.get('days')) (form.elements.namedItem('days') as HTMLSelectElement).value = q.get('days')!;
+  q.getAll('kind').forEach((k) => { const box = form.querySelector<HTMLInputElement>(`input[name="kind"][value="${k}"]`); if (box) box.checked = true; });
+
+  function apply() {
+    const f = new FormData(form);
+    const region = String(f.get('region') ?? '');
+    const days = String(f.get('days') ?? '');
+    const price = Number(f.get('price'));
+    const wanted = f.getAll('kind').map(String);
+    const sort = String(f.get('sort') ?? '');
+    priceOut.dataset.usd = String(price);
+    let shown = 0;
+    for (const c of cards) {
+      const ok = (!region || c.dataset.region === region)
+        && (!days || c.dataset.days === days)
+        && Number(c.dataset.price) <= price
+        && (wanted.length === 0 || wanted.some((k) => c.dataset.kinds!.split(' ').includes(k)));
+      c.hidden = !ok;
+      if (ok) shown++;
+    }
+    const order = sort === 'low' ? [...cards].sort((a, b) => +a.dataset.price! - +b.dataset.price!)
+      : sort === 'high' ? [...cards].sort((a, b) => +b.dataset.price! - +a.dataset.price!)
+      : sort === 'short' ? [...cards].sort((a, b) => +a.dataset.days! - +b.dataset.days!)
+      : original;
+    order.forEach((c) => grid.appendChild(c));
+    count.textContent = (shown === 1 ? count.dataset.one! : count.dataset.many!).replace(/\d+/, String(shown));
+    document.getElementById('none')!.hidden = shown > 0;
+    renderPrices();
+  }
+  form.addEventListener('input', apply);
+  form.addEventListener('reset', () => setTimeout(apply));
+  apply();
+</script>

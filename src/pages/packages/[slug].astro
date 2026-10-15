@@ -1,0 +1,8 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TourPage from '../../components/TourPage.astro';
+import { tours } from '../../data/packages';
+export function getStaticPaths() { return tours.map((tour) => ({ params: { slug: tour.slug }, props: { tour } })); }
+const { tour } = Astro.props;
+---
+<Layout lang="en" title={tour.en.title} description={tour.en.summary} path={`packages/${tour.slug}`} image={tour.image}><TourPage lang="en" tour={tour} /></Layout>

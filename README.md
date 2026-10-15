@@ -1,81 +1,38 @@
-# Travel Lanka — Static Site (No Database)
+# Travel Lanka · ට්‍රැවල් ලංකා
 
-A database-free, static version of the "Travel Lanka" tourism site, ready to
-deploy to **Vercel** (or any static host: Netlify, GitHub Pages, etc.).
+A bilingual (English and Sinhala) tour site for Sri Lanka — a portfolio project by **Malinga Prabhath**.
 
-The original project was PHP + MySQL. Vercel does not run PHP or MySQL, so the
-data-driven parts were converted to plain HTML/CSS/JavaScript.
+**Live:** https://malingaprabhath7-maker.github.io/tourism-static/ · සිංහල: https://malingaprabhath7-maker.github.io/tourism-static/si/
 
-## What's inside
+> Demo only: it is not a real travel agency, and no booking or payment is made.
 
-```
-tourism-static/
-├── index.html          Home page (hero + package grid)
-├── package.html        Package detail + booking form (reads ?id= from the URL)
-├── gallery.html        Photo gallery of all destinations
-├── about.html          About page (story, stats, why-us)
-├── contact.html        Contact details + message form
-├── vercel.json         Static hosting config (clean URLs)
-├── css/style.css       Extra styles (same as the original)
-├── js/
-│   ├── data.js         The tour packages (edit here to add/change packages)
-│   ├── layout.js       Reusable navbar + footer
-│   ├── home.js         Builds the package cards
-│   ├── package.js      Renders one package + client-side booking form
-│   ├── gallery.js      Builds the photo grid
-│   └── contact.js      Client-side contact form
-└── assets/images/      Package photos (9 images)
-```
+## Features
 
-## Add or edit a package
+- **Search from the home page** by region, interest and length
+- **Tour list with live filters** — region, interest, days and budget — and sorting
+- **Tour pages** with highlights, a day-by-day route, what is included, the best time to go and an OpenStreetMap map
+- **Request a tour** — the form works out the total for your group and opens a ready-made message in WhatsApp or email
+- **My trip** — save tours on your device, see the total days and price for your group, share the plan on WhatsApp
+- **USD or LKR prices**, switchable anywhere on the site
+- **Gallery** with a full-screen viewer
+- English and Sinhala, light and dark mode, works on phones
 
-Open `js/data.js` and edit the `PACKAGES` array. Each package has:
-`id`, `title`, `destination`, `price`, `duration_days`, `image`, `description`.
-Put new photos in `assets/images/` and point `image` at them.
+## Tech
 
-## Run locally
+- [Astro 5](https://astro.build) static site, [Tailwind CSS 4](https://tailwindcss.com), TypeScript
+- No database: tours live in `src/data/packages.ts`; saved trips use the browser's local storage
+- Deployed to GitHub Pages by GitHub Actions on every push
 
-Because the pages load JavaScript files, open them through a small local server
-(not by double-clicking the file):
+## Edit tours
+
+Open `src/data/packages.ts`. Each tour has English and Sinhala text, a day-by-day plan, price in USD and map coordinates. Add a photo to `public/images/` and set `image` — tours without a photo show a coloured card until one is added.
 
 ```bash
-# from inside the tourism-static folder
-npx serve .
-# or
-python -m http.server 8000
+npm install
+npm run dev      # http://localhost:4321/tourism-static/
+npm run build
 ```
 
-Then visit http://localhost:8000
+## History
 
-## Deploy to Vercel
-
-1. Push this `tourism-static` folder to a GitHub repo (or use the Vercel CLI).
-2. In Vercel, **New Project → Import** the repo.
-3. Framework preset: **Other**. Root directory: the folder containing
-   `index.html`. No build command, no output directory needed.
-4. Click **Deploy**.
-
-Or with the CLI:
-
-```bash
-npm i -g vercel
-cd tourism-static
-vercel
-```
-
-## What changed from the PHP version
-
-| Original (PHP + MySQL)            | Static version                                  |
-|----------------------------------|-------------------------------------------------|
-| `index.php` (DB query loop)      | `index.html` + `js/home.js` reading `data.js`   |
-| `package.php?id=5`               | `package.html?id=5` + `js/package.js`           |
-| `header.php` / `footer.php`      | injected by `js/layout.js`                       |
-| MySQL `packages` table           | `PACKAGES` array in `js/data.js`                 |
-| Server-side booking (`book.php`) | Client-side form → confirmation + `mailto:` link |
-
-### Features that required a database (removed)
-
-Customer **login/register**, **saved bookings** (`my-bookings.php`), and the
-**admin panel** need a server and database, so they are not part of the static
-site. If you need them later, use a hosted backend (e.g. a serverless function
-+ a database like Supabase/Neon) or a form service (Formspree) for bookings.
+The first version was a PHP and MySQL site, later made static with Bootstrap. It is kept on the [`v1-original`](https://github.com/malingaprabhath7-maker/tourism-static/tree/v1-original) branch.

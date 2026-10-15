@@ -1,0 +1,66 @@
+import type { Lang } from './packages';
+
+export const ui = {
+  en: {
+    other: 'සිංහල', siteDesc: 'Hand-picked tours around Sri Lanka — culture, hill country, beaches and wildlife — with day-by-day plans and prices in USD or LKR.',
+    nav: { tours: 'Tours', gallery: 'Gallery', plan: 'My trip', contact: 'Contact' },
+    heroTitle: 'Sri Lanka, one good day at a time',
+    heroText: 'Small tours with a local driver-guide. Pick a few days, see exactly what each one holds, and send us your dates.',
+    where: 'Where to?', whereAll: 'Anywhere', what: 'What do you enjoy?', whatAll: 'Everything', days: 'Days', daysAny: 'Any length', search: 'Find tours',
+    popular: 'Popular tours', allTours: 'See all tours',
+    byKind: 'Travel your way',
+    whyTitle: 'Why travel with us',
+    why: [['Local driver-guides', 'Born in the places they show you, and fluent in English.'], ['Clear day-by-day plans', 'You see every stop and what is included before you book.'], ['Prices in USD or LKR', 'No hidden fees. Switch currency any time.']],
+    toursTitle: 'All tours', toursIntro: 'Filter by region, interest, length and budget.',
+    region: 'Region', interest: 'Interest', maxPrice: 'Budget per person', sort: 'Sort', sortPop: 'Recommended', sortLow: 'Price: low to high', sortHigh: 'Price: high to low', sortShort: 'Shortest first',
+    results: (n: number) => `${n} ${n === 1 ? 'tour' : 'tours'}`, none: 'No tours match. Try a bigger budget or another region.', reset: 'Clear filters',
+    day: (n: number) => `${n} ${n === 1 ? 'day' : 'days'}`, from: 'from', perPerson: 'per person',
+    view: 'View tour', save: 'Save to my trip', saved: 'Saved to my trip', remove: 'Remove',
+    highlights: 'Highlights', itinerary: 'Day by day', dayN: (n: number) => `Day ${n}`, included: 'Included', best: 'Best time to go', onMap: 'On the map',
+    book: 'Request this tour', name: 'Your name', date: 'Start date', people: 'People', phone: 'Phone or WhatsApp', note: 'Anything we should know?',
+    total: 'Estimated total', sendWa: 'Send on WhatsApp', sendMail: 'Send by email',
+    demo: 'Demo site: no booking is made and no payment is taken. Your request opens in WhatsApp or email for you to send.',
+    rateNote: 'LKR prices use an approximate rate of 300 per US dollar.',
+    planTitle: 'My trip', planIntro: 'Tours you saved on this device. Change the number of people to see the total.', planEmpty: 'You have not saved any tours yet.', browse: 'Browse tours', share: 'Share my trip on WhatsApp', clear: 'Clear my trip',
+    galleryTitle: 'Gallery', galleryIntro: 'A few moments from our tours.',
+    contactTitle: 'Contact', contactIntro: 'Questions about a tour, a custom trip or a group? Write to us.',
+    aboutTitle: 'About this project',
+    about: 'Travel Lanka is a portfolio project by Malinga Prabhath. It began as a PHP and MySQL site and was rebuilt as a fast static site in English and Sinhala.',
+    footer: 'Portfolio demo by Malinga Prabhath · not a real travel agency',
+    currency: 'Currency', theme: 'Toggle dark mode', photoSoon: 'Photo coming soon',
+  },
+  si: {
+    other: 'English', siteDesc: 'සංස්කෘතිය, කඳුකරය, වෙරළ සහ වනජීවීන් — දිනෙන් දින සැලසුම් සහ USD හෝ රුපියල් මිල සහිත ලංකා චාරිකා.',
+    nav: { tours: 'චාරිකා', gallery: 'ඡායාරූප', plan: 'මගේ ගමන', contact: 'සම්බන්ධ වන්න' },
+    heroTitle: 'ලංකාව, එක හොඳ දවසින් දවසට',
+    heroText: 'දේශීය රියදුරු-මාර්ගෝපදේශකයෙක් සමඟ කුඩා චාරිකා. දින කිහිපයක් තෝරන්න, හැම දවසකම තියෙන දේ බලන්න, ඔබේ දින අපට එවන්න.',
+    where: 'කොහෙටද?', whereAll: 'ඕනෑම තැනක්', what: 'ඔබ කැමති මොනවටද?', whatAll: 'සියල්ල', days: 'දින', daysAny: 'ඕනෑම කාලයක්', search: 'චාරිකා සොයන්න',
+    popular: 'ජනප්‍රිය චාරිකා', allTours: 'සියලු චාරිකා',
+    byKind: 'ඔබේ විදිහට සංචාරය කරන්න',
+    whyTitle: 'අප සමඟ ඇයි?',
+    why: [['දේශීය මාර්ගෝපදේශකයන්', 'ඔවුන් පෙන්වන ප්‍රදේශවලම උපන්, ඉංග්‍රීසි හොඳින් කතා කරන අය.'], ['පැහැදිලි දිනෙන් දින සැලසුම්', 'වෙන් කරන්න කලින් හැම නැවතුමක්ම සහ ඇතුළත් දේ බලන්න.'], ['USD හෝ රුපියල් මිල', 'සැඟවුණු ගාස්තු නැහැ. ඕනෑම වෙලාවක මුදල් ඒකකය මාරු කරන්න.']],
+    toursTitle: 'සියලු චාරිකා', toursIntro: 'ප්‍රදේශය, රුචිය, කාලය සහ මිල අනුව පෙරන්න.',
+    region: 'ප්‍රදේශය', interest: 'රුචිය', maxPrice: 'එක් අයෙකුට උපරිම මිල', sort: 'පිළිවෙල', sortPop: 'නිර්දේශිත', sortLow: 'මිල: අඩු සිට', sortHigh: 'මිල: වැඩි සිට', sortShort: 'කෙටිම මුලින්',
+    results: (n: number) => `චාරිකා ${n}`, none: 'ගැළපෙන චාරිකා නැහැ. මිල වැඩි කර හෝ වෙනත් ප්‍රදේශයක් තෝරා බලන්න.', reset: 'Filters ඉවත් කරන්න',
+    day: (n: number) => `දින ${n}`, from: 'සිට', perPerson: 'එක් අයෙකුට',
+    view: 'චාරිකාව බලන්න', save: 'මගේ ගමනට එකතු කරන්න', saved: 'මගේ ගමනට එකතු කළා', remove: 'ඉවත් කරන්න',
+    highlights: 'විශේෂාංග', itinerary: 'දිනෙන් දින', dayN: (n: number) => `${n} වන දිනය`, included: 'ඇතුළත්', best: 'යාමට හොඳම කාලය', onMap: 'සිතියමේ',
+    book: 'මෙම චාරිකාව ඉල්ලන්න', name: 'ඔබේ නම', date: 'ආරම්භක දිනය', people: 'පුද්ගලයින්', phone: 'දුරකථන / WhatsApp', note: 'අප දැනගත යුතු දෙයක්?',
+    total: 'ඇස්තමේන්තු එකතුව', sendWa: 'WhatsApp මගින් යවන්න', sendMail: 'Email මගින් යවන්න',
+    demo: 'Demo වෙබ් අඩවියක්: වෙන් කිරීමක් හෝ ගෙවීමක් සිදු නොවේ. ඔබේ ඉල්ලීම ඔබට යැවීමට WhatsApp හෝ email තුළ විවෘත වේ.',
+    rateNote: 'රුපියල් මිල ඩොලරයකට රු. 300 ආසන්න අනුපාතයෙන්.',
+    planTitle: 'මගේ ගමන', planIntro: 'මෙම උපාංගයේ ඔබ සුරැකූ චාරිකා. එකතුව බලන්න පුද්ගලයින් ගණන වෙනස් කරන්න.', planEmpty: 'ඔබ තවම චාරිකා සුරැකුවේ නැහැ.', browse: 'චාරිකා බලන්න', share: 'මගේ ගමන WhatsApp එකෙන් බෙදාගන්න', clear: 'මගේ ගමන හිස් කරන්න',
+    galleryTitle: 'ඡායාරූප', galleryIntro: 'අපේ චාරිකාවලින් මොහොතක්.',
+    contactTitle: 'සම්බන්ධ වන්න', contactIntro: 'චාරිකාවක්, විශේෂ ගමනක් හෝ කණ්ඩායමක් ගැන ප්‍රශ්න? අපට ලියන්න.',
+    aboutTitle: 'මෙම project එක ගැන',
+    about: 'Travel Lanka යනු මාලිංග ප්‍රභාත්ගේ portfolio project එකක්. PHP සහ MySQL වෙබ් අඩවියක් ලෙස ආරම්භ වී, ඉංග්‍රීසි සහ සිංහල වේගවත් static site එකක් ලෙස නැවත හදන ලදී.',
+    footer: 'මාලිංග ප්‍රභාත්ගේ portfolio demo එකක් · සැබෑ සංචාරක ආයතනයක් නොවේ',
+    currency: 'මුදල් ඒකකය', theme: 'Dark mode මාරු කරන්න', photoSoon: 'ඡායාරූපය ඉක්මනින්',
+  },
+};
+export type UI = typeof ui.en;
+export const t = (lang: Lang) => ui[lang] as UI;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+export const url = (p = '') => `${base}/${p.replace(/^\//, '')}`;
+export const page = (lang: Lang, p = '') => url((lang === 'si' ? 'si/' : '') + p.replace(/^\//, ''));

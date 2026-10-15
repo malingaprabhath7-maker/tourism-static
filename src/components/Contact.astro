@@ -1,0 +1,36 @@
+---
+import type { Lang } from '../data/packages';
+import { t } from '../data/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const u = t(lang);
+---
+<section class="mx-auto grid max-w-6xl gap-12 px-5 pt-12 lg:grid-cols-2">
+  <div>
+    <h1 class="font-display text-4xl font-extrabold tracking-tight sm:text-5xl">{u.contactTitle}</h1>
+    <p class="mt-3 text-lg text-muted">{u.contactIntro}</p>
+    <div class="mt-10 rounded-3xl bg-soft p-6">
+      <h2 class="font-display text-xl font-bold">{u.aboutTitle}</h2>
+      <p class="mt-2 leading-relaxed text-muted">{u.about}</p>
+      <p class="mt-4 text-sm text-muted">{u.footer}</p>
+    </div>
+  </div>
+  <form id="contact" class="space-y-4 rounded-3xl border border-line p-6" data-lang={lang}>
+    <div><label class="label" for="c-name">{u.name}</label><input id="c-name" name="name" required class="field" autocomplete="name" /></div>
+    <div><label class="label" for="c-phone">{u.phone}</label><input id="c-phone" name="phone" type="tel" class="field" autocomplete="tel" /></div>
+    <div><label class="label" for="c-msg">{u.note}</label><textarea id="c-msg" name="message" rows="5" required class="field"></textarea></div>
+    <button type="submit" name="via" value="wa" class="btn btn-main w-full">{u.sendWa}</button>
+    <button type="submit" name="via" value="mail" class="btn btn-line w-full">{u.sendMail}</button>
+    <p class="text-xs text-muted">{u.demo}</p>
+  </form>
+</section>
+<script>
+  const form = document.getElementById('contact') as HTMLFormElement;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const f = new FormData(form);
+    const text = `${f.get('message')}\n\n— ${f.get('name')}${f.get('phone') ? ` (${f.get('phone')})` : ''}`;
+    const via = (e as SubmitEvent).submitter?.getAttribute('value');
+    location.href = via === 'mail' ? `mailto:?subject=${encodeURIComponent('Travel Lanka enquiry')}&body=${encodeURIComponent(text)}` : `https://wa.me/?text=${encodeURIComponent(text)}`;
+  });
+</script>

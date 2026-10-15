@@ -1,0 +1,16 @@
+---
+import type { Tour, Lang } from '../data/packages';
+import { t, url } from '../data/ui';
+interface Props { tour: Tour; lang: Lang; class?: string; eager?: boolean }
+const { tour, lang, class: cls = '', eager = false } = Astro.props;
+// colour per region for tours that do not have a photo yet
+const tint = { 'Cultural Triangle': 'from-[#b5651d] to-[#6b3a12]', 'Hill Country': 'from-[#2f7d4a] to-[#123d27]', 'South Coast': 'from-[#0f7c80] to-[#0b3f52]', 'West Coast': 'from-[#2e5b9a] to-[#162f57]' }[tour.region];
+---
+{tour.image
+  ? <img src={url(tour.image)} alt={tour.imageAlt ?? tour[lang].title} loading={eager ? 'eager' : 'lazy'} class={`object-cover ${cls}`} />
+  : <div class={`grid place-items-center bg-gradient-to-br ${tint} p-6 text-center text-white ${cls}`} role="img" aria-label={tour[lang].title}>
+      <div>
+        <p class="font-display text-2xl font-bold leading-tight">{tour[lang].title}</p>
+        <p class="mt-1 text-sm opacity-80">{t(lang).photoSoon}</p>
+      </div>
+    </div>}
