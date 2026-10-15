@@ -25,8 +25,8 @@ export const LKR_PER_USD = 300; // approximate, shown with a note
 export const tours: Tour[] = [
   {
     slug: 'sigiriya-dambulla',
-    image: 'images/balloon-dambulla.webp',
-    imageAlt: 'Hot-air balloon over green fields near Dambulla',
+    image: 'images/sigiriya-rock.webp',
+    imageAlt: 'The summit ruins of Sigiriya rock above the forest',
     kind: ['culture', 'adventure'],
     region: 'Cultural Triangle',
     days: 2,
@@ -53,6 +53,8 @@ export const tours: Tour[] = [
   },
   {
     slug: 'kandy-culture',
+    image: 'images/temple-tooth-kandy.webp',
+    imageAlt: 'Temple of the Sacred Tooth Relic in Kandy',
     kind: ['culture'],
     region: 'Hill Country',
     days: 2,
@@ -108,6 +110,8 @@ export const tours: Tour[] = [
   },
   {
     slug: 'kandy-ella-train',
+    image: 'images/nine-arch-ella.webp',
+    imageAlt: 'Blue train crossing the Nine Arch Bridge in Ella',
     kind: ['nature'],
     region: 'Hill Country',
     days: 1,
@@ -133,6 +137,8 @@ export const tours: Tour[] = [
   },
   {
     slug: 'nuwara-eliya-tea',
+    image: 'images/tea-nuwara-eliya.webp',
+    imageAlt: 'Misty tea estate path in the hill country',
     kind: ['nature'],
     region: 'Hill Country',
     days: 2,
@@ -215,6 +221,8 @@ export const tours: Tour[] = [
   },
   {
     slug: 'galle-fort',
+    image: 'images/galle-fort-aerial.webp',
+    imageAlt: 'Aerial view of Galle Fort and the ocean',
     kind: ['culture', 'beach'],
     region: 'South Coast',
     days: 2,
@@ -269,6 +277,8 @@ export const tours: Tour[] = [
   },
   {
     slug: 'colombo-city',
+    image: 'images/colombo-night.webp',
+    imageAlt: 'Colombo skyline lit up at night',
     kind: ['culture'],
     region: 'West Coast',
     days: 1,

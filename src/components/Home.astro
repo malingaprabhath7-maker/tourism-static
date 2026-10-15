@@ -7,7 +7,7 @@ interface Props { lang: Lang }
 const { lang } = Astro.props;
 const u = t(lang);
 const featured = ['sigiriya-dambulla', 'ella-hill-country', 'yala-safari', 'mirissa-whales', 'kandy-culture', 'madu-river-bentota'].map((s) => tours.find((x) => x.slug === s)!);
-const kindPhotos: Record<string, string | undefined> = { culture: 'images/balloon-dambulla.webp', nature: 'images/zipline-ella.webp', beach: 'images/beach-south.webp', wildlife: 'images/elephant-yala.webp', adventure: 'images/kayak-madu.webp' };
+const kindPhotos: Record<string, string | undefined> = { culture: 'images/temple-tooth-kandy.webp', nature: 'images/nine-arch-ella.webp', beach: 'images/beach-south.webp', wildlife: 'images/elephant-yala.webp', adventure: 'images/zipline-ella.webp' };
 ---
 <section class="relative isolate overflow-hidden">
   <img src={url('images/balloon-dambulla.webp')} alt="" class="absolute inset-0 -z-10 size-full object-cover" fetchpriority="high" />
