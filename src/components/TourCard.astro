@@ -19,9 +19,9 @@ const u = t(lang);
     <p class="mt-2 line-clamp-3 text-[0.95rem] leading-relaxed text-muted">{tour[lang].summary}</p>
     <ul class="mt-3 flex flex-wrap gap-1.5">{tour.kind.map((k) => <li class="tag">{kinds[k][lang]}</li>)}</ul>
     <div class="mt-auto flex items-end justify-between gap-3 pt-5">
-      <p class="leading-tight"><span class="text-xs text-muted">{u.from}</span><br /><span class="font-display text-2xl font-bold" data-usd={tour.priceUsd}>${tour.priceUsd}</span> <span class="text-xs text-muted">{u.perPerson}</span></p>
+      <p class="leading-tight"><span class="font-display text-2xl font-bold" data-usd={tour.priceUsd}>${tour.priceUsd}</span><br /><span class="text-xs text-muted">{u.perPerson}</span></p>
       <button type="button" data-save={tour.slug} data-label-save={u.save} data-label-saved={u.saved}
-        class="rounded-full border border-line px-3 py-1.5 text-xs font-semibold aria-pressed:border-coconut aria-pressed:bg-coconut aria-pressed:text-ink">{u.save}</button>
+        class="shrink-0 whitespace-nowrap rounded-full border border-line px-3 py-1.5 text-xs font-semibold aria-pressed:border-coconut aria-pressed:bg-coconut aria-pressed:text-ink">{u.save}</button>
     </div>
   </div>
 </article>
